@@ -2,12 +2,15 @@
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
+using Bulky.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
 
@@ -125,7 +128,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             var obj = _unitOfWork.Product.Get(u => u.Id == id);
             if (obj == null)
             {
-                return Json(new { success = false, message = "Error fetching product." });
+                return Json(new { success = false, message = "Error while deleting." });
             }
 
             var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
