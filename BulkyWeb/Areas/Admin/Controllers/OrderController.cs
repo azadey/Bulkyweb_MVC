@@ -141,7 +141,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             OrderVM.OrderDetails = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == OrderVM.OrderHeader.Id, includeProperties: "Product");
 
             // Stripe logic to capture payment
-            var domain = "https://localhost:7265/";
+            var domain = Request.Scheme + "://"+ Request.Host.Value +"/";
             var options = new SessionCreateOptions
             {
                 SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",
